@@ -47,14 +47,12 @@ class GameState:
         self.board.pop()
         self.current_move -= 1
 
-        # Удаляем последнюю сохранённую оценку
         if self.evals_before_move:
             self.evals_before_move.pop()
         if self.move_classifications:
             self.move_classifications.pop()
 
     def get_eval_before_move(self, move_index):
-        """Получить оценку перед указанным ходом"""
         if move_index < len(self.evals_before_move):
             return self.evals_before_move[move_index]
         return None

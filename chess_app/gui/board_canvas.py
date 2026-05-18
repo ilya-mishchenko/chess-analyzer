@@ -34,7 +34,7 @@ class BoardCanvas(tk.Canvas):
     def redraw_board(self, board):
         self.delete("piece")
         self.delete("arrow")
-        self.delete("move_icon")  # <-- ДОБАВИТЬ: удаляем иконки при перерисовке
+        self.delete("move_icon")  
 
         if board is None:
             return
@@ -80,7 +80,7 @@ class BoardCanvas(tk.Canvas):
         )
 
     def draw_move_icon(self, move, classification):
-        self.delete("move_icon")  # удаляем старую иконку перед рисованием новой
+        self.delete("move_icon")  
 
         if not classification:
             return

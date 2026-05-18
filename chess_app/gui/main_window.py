@@ -132,15 +132,12 @@ class ChessApp:
         was_mate_before = self.state.is_mate
         best_before = self.state.best_move
 
-        # Применяем ход (внутри сохраняется оценка перед ходом)
         self.state.apply_move(move)
 
-        # Анализируем новую позицию
         result = self.engine_service.analyze_position(self.state.board)
         self.state.update_engine(result)
         self.state.update_position_state()
 
-        # Классифицируем ход (используем сохранённые данные)
         classification = classify_move(
             move=move,
             best_move=best_before,
@@ -163,18 +160,14 @@ class ChessApp:
         if self.state.current_move <= 0:
             return
 
-        # Откатываем ход
         self.state.revert_move()
 
-        # Получаем оценку ПЕРЕД этим ходом (из истории)
         eval_before_data = self.state.get_eval_before_move(self.state.current_move)
 
-        # Анализируем текущую позицию (после отката)
         result = self.engine_service.analyze_position(self.state.board)
         self.state.update_engine(result)
         self.state.update_position_state()
 
-        # Восстанавливаем классификацию из истории
         if self.state.current_move > 0:
             self.state.last_move = self.state.moves[self.state.current_move - 1]
             self.state.last_classification = self.state.move_classifications[

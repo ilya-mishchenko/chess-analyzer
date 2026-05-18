@@ -25,32 +25,22 @@ class EvalBar(tk.Canvas):
             self._draw(400)
             return
 
-        # ---------------- РЕАЛЬНЫЙ МАТ (доска в мате) ----------------
         if self.app.state.board.is_checkmate():
-            # Определяем победителя
             if self.app.state.board.turn == chess.WHITE:
-                # Белые должны ходить, но не могут -> победили чёрные
                 self.app.eval_score_label.config(text="Black wins")
-                self._draw(800)  # полностью чёрный
+                self._draw(800)
             else:
-                # Чёрные должны ходить, но не могут -> победили белые
                 self.app.eval_score_label.config(text="White wins")
-                self._draw(0)  # полностью белый
+                self._draw(0) 
             return
 
-        # ---------------- МАТОВАЯ УГРОЗА (движок предсказывает мат) ----------------
         if is_mate and not self.app.state.board.is_checkmate():
             mate_in = value if value is not None else 0
             self.app.eval_score_label.config(text=f"M{abs(mate_in)}")
 
-            # Показываем как обычную оценку, но с текстом M
-            # mate_in > 0 = белые ставят мат = перевес белых
-            # mate_in < 0 = чёрные ставят мат = перевес чёрных
             if mate_in > 0:
-                # Перевес белых -> бар стремится к полностью белому
-                numeric = 8  # максимальный перевес
+                numeric = 8  
             elif mate_in < 0:
-                # Перевес чёрных -> бар стремится к полностью чёрному
                 numeric = -8
             else:
                 numeric = 0
@@ -60,7 +50,6 @@ class EvalBar(tk.Canvas):
             self._draw(y)
             return
 
-        # ---------------- ОБЫЧНАЯ ПОЗИЦИЯ ----------------
         numeric = max(-8, min(8, value if value is not None else 0))
         self.app.eval_score_label.config(text=f"{numeric:+.2f}")
 
@@ -70,6 +59,5 @@ class EvalBar(tk.Canvas):
         self._draw(y)
 
     def _draw(self, y):
-        # y = граница: сверху чёрный, снизу белый
         self.create_rectangle(0, 0, 50, y, fill="black", tags="bar")
         self.create_rectangle(0, y, 50, 800, fill="white", tags="bar")

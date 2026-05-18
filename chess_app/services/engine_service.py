@@ -5,10 +5,13 @@ from chess_analyzer.config import STOCKFISH_PATH
 class EngineService:
     def __init__(self, depth=16, threads=1):
         self.depth = depth
-        self.engine = chess.engine.SimpleEngine.popen_uci(
-            str(STOCKFISH_PATH),
-            setpgrp=False,
-        )
+        try:
+            self.engine = chess.engine.SimpleEngine.popen_uci(
+                str(STOCKFISH_PATH),
+                setpgrp=False,
+            )
+        except FileNotFoundError:
+            raise RuntimeError(f"Stockfish not found at {STOCKFISH_PATH}. See README for setup.")
 
         self.engine.configure(
             {

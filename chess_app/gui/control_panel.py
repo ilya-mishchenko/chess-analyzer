@@ -20,7 +20,7 @@ class ControlPanel(ttk.Frame):
             self, text="Next move", command=self.app.next_move, state="disabled"
         )
 
-        self.button_next_move.pack(side="right", padx=(10, 0))
+        self.button_next_move.pack(side="right")
 
         self.button_prev_move = ttk.Button(
             self,
@@ -29,7 +29,7 @@ class ControlPanel(ttk.Frame):
             state="disabled",
         )
 
-        self.button_prev_move.pack(side="left", padx=(0, 10))
+        self.button_prev_move.pack(side="left", padx=(0, 25))
 
     def enable_buttons(self):
         self.button_next_move.config(state="normal")

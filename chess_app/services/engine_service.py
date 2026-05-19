@@ -75,3 +75,6 @@ class EngineService:
 
     def quit(self):
         self.engine.quit()
+
+    def update_depth(self, new_depth):
+        self.depth = new_depth

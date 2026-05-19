@@ -126,7 +126,6 @@ class ChessApp:
 
         move = self.state.moves[self.state.current_move]
 
-        # Получаем данные ПЕРЕД ходом
         moved_color = self.state.board.turn
         eval_before = self.state.eval_value
         was_mate_before = self.state.is_mate
